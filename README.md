@@ -9,6 +9,9 @@ Para as questões a seguir, você deverá executar códigos em um notebook Jupyt
 3. Todas as bibliotecas usadas nesse exercícios estão instaladas em um ambiente virtual específico
 4. Gere um arquivo de requerimentos (requirements.txt) com os pacotes necessários. É necessário se certificar que a versão do pacote está disponibilizada.
 5. Tire um printscreen do ambiente que será usado rodando em sua máquina.
+
+![printscreen](printscreen.png "printscreen")
+
 6. Disponibilize os códigos gerados, assim como os artefatos acessórios (requirements.txt) e instruções em um repositório GIT público. (se isso não for feito, o diretório com esses arquivos deverá ser enviado compactado no moodle).
 
 ## Escolha de base de dados
