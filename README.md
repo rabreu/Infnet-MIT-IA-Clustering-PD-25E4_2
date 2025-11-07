@@ -5,15 +5,21 @@
 Para as questões a seguir, você deverá executar códigos em um notebook Jupyter, rodando em ambiente local, certifique-se que:
 
 1. Você está rodando em Python 3.9+
+> Respondido no item 5.
 2. Você está usando um ambiente virtual: Virtualenv ou Anaconda
+> Respondido no item 3 e 5.
 3. Todas as bibliotecas usadas nesse exercícios estão instaladas em um ambiente virtual específico
+![printscreen3](printscreen3.png "printscreen3")
 4. Gere um arquivo de requerimentos (requirements.txt) com os pacotes necessários. É necessário se certificar que a versão do pacote está disponibilizada.
+> [requirements.txt](requirements.txt)
 5. Tire um printscreen do ambiente que será usado rodando em sua máquina.
 
-![printscreen](printscreen.png "printscreen")
+![printscreen1](printscreen1.png "printscreen1")
+![printscreen2](printscreen2.png "printscreen2")
+![printscreen4](printscreen4.png "printscreen4")
 
 6. Disponibilize os códigos gerados, assim como os artefatos acessórios (requirements.txt) e instruções em um repositório GIT público. (se isso não for feito, o diretório com esses arquivos deverá ser enviado compactado no moodle).
-
+> https://github.com/rabreu/Infnet-MIT-IA-Clustering-PdD01
 ## Escolha de base de dados
 
 Para as questões a seguir, usaremos uma base de dados e faremos a análise exploratória dos dados, antes da clusterização.
