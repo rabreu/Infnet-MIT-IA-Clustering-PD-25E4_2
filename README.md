@@ -1,6 +1,6 @@
 # Projeto de Disciplina - Algoritmos de Inteligência Artificial para Clusterização [25E4_2]
 
-u## Infraestrutura
+## Infraestrutura
 
 Para as questões a seguir, você deverá executar códigos em um notebook Jupyter, rodando em ambiente local, certifique-se que:
 
@@ -10,19 +10,19 @@ Para as questões a seguir, você deverá executar códigos em um notebook Jupyt
 > Respondido no item 3 e 5.
 3. Todas as bibliotecas usadas nesse exercícios estão instaladas em um ambiente virtual específico
 
-    <!-- ![printscreen3](printscreen3.png "printscreen3") -->
+> ![printscreen3](images/printscreen3.png "printscreen3")
 
 4. Gere um arquivo de requerimentos (requirements.txt) com os pacotes necessários. É necessário se certificar que a versão do pacote está disponibilizada.
 > [requirements.txt](requirements.txt)
 5. Tire um printscreen do ambiente que será usado rodando em sua máquina.
 
-<!-- ![printscreen1](printscreen1.png "printscreen1")
-![printscreen2](printscreen2.png "printscreen2")
-![printscreen4](printscreen4.png "printscreen4") -->
+![printscreen1](images/printscreen1.png "printscreen1")
+![printscreen2](images/printscreen2.png "printscreen2")
+![printscreen4](images/printscreen4.png "printscreen4")
 
 6. Disponibilize os códigos gerados, assim como os artefatos acessórios (requirements.txt) e instruções em um repositório GIT público. (se isso não for feito, o diretório com esses arquivos deverá ser enviado compactado no moodle).
 
-> https://github.com/rabreu/Infnet-MIT-IA-Clustering-PdD01
+> https://github.com/rabreu/Infnet-MIT-IA-Clustering-PD-25E4_2
 
 ## Escolha de base de dados
 
@@ -42,22 +42,36 @@ Para os dados pré-processados da etapa anterior você irá:
 
 1. Realizar o agrupamento dos países em 3 grupos distintos. Para tal, use:
     - K-Médias
+      > [Execução K-Means, Hierarquical Agglomerative e DBSCAN para k=3](#Execução-K-Means,-Hierarquical-Agglomerative-e-DBSCAN-para-k=3)
     - Clusterização Hierárquica
       > [Execução K-Means, Hierarquical Agglomerative e DBSCAN para k=3](#Execução-K-Means,-Hierarquical-Agglomerative-e-DBSCAN-para-k=3)
 2. Para os resultados, do K-Médias:
     - Interprete cada um dos clusters obtidos citando:
       - Qual a distribuição das dimensões em cada grupo
+        > Podemos separar três grupos por diferenças socioeconomicas: Países desenvolvidos, em desenvolvimento e subdesenvolvidos.
       - O país, de acordo com o algoritmo, melhor representa o seu agrupamento. Justifique
 3. Para os resultados da Clusterização Hierárquica, apresente o dendograma e interprete os resultados
 > [Dendrogramas e Análise](#Dendrogramas-e-Análise)
 4. Compare os dois resultados, aponte as semelhanças e diferenças e interprete.
+> [Comparação entre K-Means e Hierarchical Agglomerative](#Comparação-entre-K-Means-e-Hierarchical-Agglomerative)
 
 ## Escolha de algoritmos
 
 1. Escreva em tópicos as etapas do algoritmo de K-médias até sua convergência.
+    > - Escolher o número de clusters K.
+    > - Selecionar centróides iniciais.
+    > - Atribuir cada ponto ao centróide mais próximo.
+    > - Recalcular os centróides (média dos pontos).
+    > - Repetir até os centróides não mudarem mais.
 2. O algoritmo de K-médias converge até encontrar os centróides que melhor descrevem os clusters encontrados (até o deslocamento entre as interações dos centróides ser mínimo). Lembrando que o centróide é o baricentro do cluster em questão e não representa, em via de regra, um dado existente na base. Refaça o algoritmo apresentado na questão 1 a fim de garantir que o cluster seja representado pelo dado mais próximo ao seu baricentro em todas as iterações do algoritmo. Obs: nesse novo algoritmo, o dado escolhido será chamado medóide.
+    > - Escolher K pontos reais como medóides.
+    > - Atribuir cada ponto ao medóide mais próximo.
+    > - Calcular o novo medóide (ponto real mais próximo do centro).
+    > - Repetir até os medóides não mudarem mais.
 3. O algoritmo de K-médias é sensível a outliers nos dados. Explique.
+    > Sim. As médias dos _outliers_ acabam _puxando_ o centróide para fora do centro causando uma distorção.
 4. Por que o algoritmo de DBScan é mais robusto à presença de outliers?
+    > Porque ele não se baseia em média - que é a raiz do problema acima - mas na densidade (parâmetro _eps/epsilon_), entretanto é necessário ajustar essa entrada dependendo dos objetivos da análise.
 
 Assim que terminar, salve o seu arquivo PDF e poste no Moodle. Utilize o seu nome para nomear o arquivo, identificando também a disciplina no seguinte formato: “nomedoaluno_nomedadisciplina_pd.PDF”.
 
@@ -68,10 +82,12 @@ Assim que terminar, salve o seu arquivo PDF e poste no Moodle. Utilize o seu nom
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sb
+import numpy as np
 from sklearn.datasets import make_blobs
 from sklearn import preprocessing as preproc
 from scipy.cluster import hierarchy
 from sklearn.cluster import KMeans, DBSCAN, AgglomerativeClustering
+from sklearn_extra.cluster import KMedoids
 from yellowbrick.cluster import SilhouetteVisualizer, KElbowVisualizer
 from sklearn.decomposition import PCA
 
@@ -84,11 +100,13 @@ RIGHT_dec_format = lambda x: x.__str__().replace(',','').replace('.',',')
 print("Pandas version:", pd.__version__)
 print("Matplotlib version:", plt.matplotlib.__version__)
 print("Seaborn version:", sb.__version__)
+print("Numpy version:", np.__version__)
 ```
 
     Pandas version: 2.3.3
     Matplotlib version: 3.10.7
     Seaborn version: 0.13.2
+    Numpy version: 1.26.4
     
 
 ## Importação e Normalização dos Dados
@@ -267,7 +285,7 @@ dataset
            [ 0.44841668, -0.40647827, -0.59727159, ..., -0.34463279,
              1.14094382, -0.63775406],
            [ 1.11495062, -0.15034774, -0.33801514, ..., -2.09278484,
-             1.6246091 , -0.62954556]], shape=(167, 9))
+             1.6246091 , -0.62954556]])
 
 
 
@@ -601,11 +619,11 @@ X, labels = make_blobs(n_samples=N_COUNTRIES, n_features=2, random_state=42)
 
 ```python
 f, ax = plt.subplots(4, 2)
-f.set_figheight(25)
+f.set_figheight(30)
 f.set_figwidth(20)
 
 for i in range(2,10):
-    kmeans = KMeans(n_clusters=i, random_state=42)
+    kmeans = KMeans(n_clusters=i, random_state=42, n_init='auto')
     q, mod = divmod(i, 2)
     sv = SilhouetteVisualizer(
         kmeans,
@@ -643,15 +661,15 @@ f, ax = plt.subplots(3)
 f.set_figheight(15)
 f.set_figwidth(10)
 
-v1 = KElbowVisualizer(KMeans(), k=9, ax=ax[0])
+v1 = KElbowVisualizer(KMeans(n_init='auto'), k=9, ax=ax[0])
 v1.fit(dataset_pca)
 v1.finalize()
 
-v2 = KElbowVisualizer(KMeans(), k=12, ax=ax[1])
+v2 = KElbowVisualizer(KMeans(n_init='auto'), k=12, ax=ax[1])
 v2.fit(dataset_pca)
 v2.finalize()
 
-v3 = KElbowVisualizer(KMeans(), k=15, ax=ax[2])
+v3 = KElbowVisualizer(KMeans(n_init='auto'), k=15, ax=ax[2])
 v3.fit(dataset_pca)
 v3.finalize()
 
@@ -667,7 +685,7 @@ plt.show()
     
 
 
-Define como variável global a quantidade ótima de clusters encontrada para utiliza-la como entrada para
+Define como variável global a quantidade ótima de clusters encontrada para utiliza-la como entrada.
 
 
 ```python
@@ -682,7 +700,7 @@ hues = pd.Series()
 EPS=0.35
 NCLUSTERS=3
 
-kmeans = KMeans(n_clusters=NCLUSTERS).fit(dataset_pca)
+kmeans = KMeans(n_clusters=NCLUSTERS, n_init='auto').fit(dataset_pca)
 hues['kmeans'] = kmeans.labels_
 
 ward = AgglomerativeClustering(n_clusters=NCLUSTERS, linkage='ward', metric='euclidean').fit(dataset_pca)
@@ -750,6 +768,37 @@ ax[2].grid(False)
     
 
 
+### Comparação entre K-Means e Hierarchical Agglomerative
+
+
+| Algoritmo  | Conclusões                                                               |
+|:-----------|:-------------------------------------------------------------------------|
+| K-Means     | Os três grupos são separados conforme definimos de forma socioeconomica. Os países mais dispersos foram incluídos no grupo 1. Podemos verificar também que os grupos 0 e 2 são mais densos - respectivamentes - em comparação ao grupo 3.|
+|  Hierarchical Agglomerative - Ward  | Foram divididos em três grupos. Um dos grupos somente para os países influênciados pelo _outliers_. Os outros dois foram divididos por caracteristicas socioeconomicas. |
+
+### Países que melhores representam seu agrupamento
+
+
+```python
+kmedoids = KMedoids(n_clusters=NCLUSTERS).fit(dataset_pca)
+
+countries_meloids = []
+
+for k in range(len(kmedoids.medoid_indices_)):
+    countries_meloids.append(dataset_raw.iloc[kmedoids.medoid_indices_[k], 0])
+
+countries_meloids
+```
+
+
+
+
+    ['Morocco', 'Benin', 'South Korea']
+
+
+
+O melóide de cada cluster é o que melhor representa seu cluster.
+
 ## Execução K-Means, Hierarquical Agglomerative e DBSCAN para k=4 (Quantidade Ótima)
 
 
@@ -757,7 +806,7 @@ ax[2].grid(False)
 hues = pd.Series()
 EPS=0.35
 
-kmeans = KMeans(n_clusters=OPTIMAL_NCLUSTERS).fit(dataset_pca)
+kmeans = KMeans(n_clusters=OPTIMAL_NCLUSTERS, n_init='auto').fit(dataset_pca)
 hues['kmeans'] = kmeans.labels_
 
 ward = AgglomerativeClustering(n_clusters=OPTIMAL_NCLUSTERS, linkage='ward', metric='euclidean').fit(dataset_pca)
@@ -822,7 +871,7 @@ ax[2].grid(False)
 
 
     
-![png](images/output_36_0.png)
+![png](images/output_41_0.png)
     
 
 
@@ -834,14 +883,14 @@ hues = pd.Series()
 EPS=0.35
 NCLUSTERS=3
 
-kmeans = KMeans(n_clusters=NCLUSTERS).fit(dataset)
+kmeans = KMeans(n_clusters=NCLUSTERS, n_init='auto').fit(dataset_pca)
 hues['kmeans'] = kmeans.labels_
 
-ward = AgglomerativeClustering(n_clusters=NCLUSTERS, linkage='ward', metric='euclidean').fit(dataset)
+ward = AgglomerativeClustering(n_clusters=NCLUSTERS, linkage='ward', metric='euclidean').fit(dataset_pca)
 hues['ward'] = ward.labels_
 
-dbscan = DBSCAN(eps=EPS, min_samples=5, n_jobs=-1, metric='euclidean').fit(dataset)
-hues['dbscan'] = dbscan.fit_predict(dataset)
+dbscan = DBSCAN(eps=EPS, min_samples=5, n_jobs=-1, metric='euclidean').fit(dataset_pca)
+hues['dbscan'] = dbscan.fit_predict(dataset_pca)
 ```
 
 
@@ -908,6 +957,6 @@ plt.show()
 
 
     
-![png](images/output_39_0.png)
+![png](images/output_44_0.png)
     
 
