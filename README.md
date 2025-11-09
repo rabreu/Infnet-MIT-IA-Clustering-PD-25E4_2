@@ -710,15 +710,15 @@ hues['ward'] = ward.labels_
 
 dbscan = DBSCAN(eps=EPS, min_samples=5, n_jobs=-1, metric='euclidean').fit(dataset_pca)
 hues['dbscan'] = dbscan.fit_predict(dataset_pca)
+
+dataset_pca = pd.DataFrame(dataset_pca)
 ```
 
 
 ```python
-f, ax = plt.subplots(3, 1)
-f.set_figheight(20)
+f, ax = plt.subplots(1, 1)
+f.set_figheight(7)
 f.set_figwidth(10)
-
-dataset_pca = pd.DataFrame(dataset_pca)
 
 sb.scatterplot(
     data=dataset_pca,
@@ -726,15 +726,44 @@ sb.scatterplot(
     y=1,
     hue=hues['kmeans'],
     palette='viridis',
-    ax=ax[0]
+    ax=ax
 )
 
-ax[0].scatter(
+ax.scatter(
     [x for x, _ in kmeans.cluster_centers_],
     [y for _, y in kmeans.cluster_centers_],
     marker='X',
     color='red'
 )
+
+ax.scatter(
+    [x for x, _ in kmeans.cluster_centers_],
+    [y for _, y in kmeans.cluster_centers_],
+    marker='X',
+    color='red'
+)
+
+ax.set_title(f'KMeans, k={NCLUSTERS}', fontfamily='Times New Roman', fontsize=14)
+```
+
+
+
+
+    Text(0.5, 1.0, 'KMeans, k=3')
+
+
+
+
+    
+![png](images/output_33_1.png)
+    
+
+
+
+```python
+f, ax = plt.subplots(1, 1)
+f.set_figheight(7)
+f.set_figwidth(10)
 
 kmeans_lm = sb.scatterplot(
     data=dataset_pca,
@@ -742,9 +771,30 @@ kmeans_lm = sb.scatterplot(
     y=1,
     hue=hues['ward'],
     palette='viridis',
-    ax=ax[1]
+    ax=ax
 )
 
+ax.set_title(f'Hierarchical Agglomerative - Ward, k={NCLUSTERS}', fontfamily='Times New Roman', fontsize=14)
+```
+
+
+
+
+    Text(0.5, 1.0, 'Hierarchical Agglomerative - Ward, k=3')
+
+
+
+
+    
+![png](images/output_34_1.png)
+    
+
+
+
+```python
+f, ax = plt.subplots(1, 1)
+f.set_figheight(7)
+f.set_figwidth(10)
 
 sb.scatterplot(
     data=dataset_pca,
@@ -752,21 +802,22 @@ sb.scatterplot(
     y=1,
     hue=hues['dbscan'],
     palette='rocket',
-    ax=ax[2]
+    ax=ax
 )
 
-ax[0].set_title(f'KMeans, k={NCLUSTERS}', fontfamily='Times New Roman', fontsize=14)
-ax[1].set_title(f'Hierarchical Agglomerative - Ward, k={NCLUSTERS}', fontfamily='Times New Roman', fontsize=14)
-ax[2].set_title(f'DBSCAN, eps={RIGHT_dec_format(EPS)}', fontfamily='Times New Roman', fontsize=14)
-
-ax[0].grid(False)
-ax[1].grid(False)
-ax[2].grid(False)
+ax.set_title(f'DBSCAN, eps={RIGHT_dec_format(EPS)}', fontfamily='Times New Roman', fontsize=14)
 ```
 
 
+
+
+    Text(0.5, 1.0, 'DBSCAN, eps=0,35')
+
+
+
+
     
-![png](images/output_33_0.png)
+![png](images/output_35_1.png)
     
 
 
@@ -816,15 +867,15 @@ hues['ward'] = ward.labels_
 
 dbscan = DBSCAN(eps=EPS, min_samples=5, n_jobs=-1, metric='euclidean').fit(dataset_pca)
 hues['dbscan'] = dbscan.fit_predict(dataset_pca)
+
+dataset_pca = pd.DataFrame(dataset_pca)
 ```
 
 
 ```python
-f, ax = plt.subplots(3, 1)
-f.set_figheight(20)
+f, ax = plt.subplots(1, 1)
+f.set_figheight(7)
 f.set_figwidth(10)
-
-dataset_pca = pd.DataFrame(dataset_pca)
 
 sb.scatterplot(
     data=dataset_pca,
@@ -832,15 +883,37 @@ sb.scatterplot(
     y=1,
     hue=hues['kmeans'],
     palette='viridis',
-    ax=ax[0]
+    ax=ax
 )
 
-ax[0].scatter(
+ax.scatter(
     [x for x, _ in kmeans.cluster_centers_],
     [y for _, y in kmeans.cluster_centers_],
     marker='X',
     color='red'
 )
+
+ax.set_title(f'KMeans, k={OPTIMAL_NCLUSTERS}', fontfamily='Times New Roman', fontsize=14)
+```
+
+
+
+
+    Text(0.5, 1.0, 'KMeans, k=4')
+
+
+
+
+    
+![png](images/output_43_1.png)
+    
+
+
+
+```python
+f, ax = plt.subplots(1, 1)
+f.set_figheight(7)
+f.set_figwidth(10)
 
 kmeans_lm = sb.scatterplot(
     data=dataset_pca,
@@ -848,9 +921,30 @@ kmeans_lm = sb.scatterplot(
     y=1,
     hue=hues['ward'],
     palette='viridis',
-    ax=ax[1]
+    ax=ax
 )
 
+ax.set_title(f'Hierarchical Agglomerative - Ward, k={OPTIMAL_NCLUSTERS}', fontfamily='Times New Roman', fontsize=14)
+```
+
+
+
+
+    Text(0.5, 1.0, 'Hierarchical Agglomerative - Ward, k=4')
+
+
+
+
+    
+![png](images/output_44_1.png)
+    
+
+
+
+```python
+f, ax = plt.subplots(1, 1)
+f.set_figheight(7)
+f.set_figwidth(10)
 
 sb.scatterplot(
     data=dataset_pca,
@@ -858,22 +952,22 @@ sb.scatterplot(
     y=1,
     hue=hues['dbscan'],
     palette='viridis',
-    ax=ax[2]
+    ax=ax
 )
 
-ax[0].set_title(f'KMeans, k={OPTIMAL_NCLUSTERS}', fontfamily='Times New Roman', fontsize=14)
-ax[1].set_title(f'Hierarchical Agglomerative - Ward, k={OPTIMAL_NCLUSTERS}', fontfamily='Times New Roman', fontsize=14)
-ax[2].set_title(f'DBSCAN, eps={RIGHT_dec_format(EPS)}', fontfamily='Times New Roman', fontsize=14)
-
-ax[0].grid(False)
-ax[1].grid(False)
-ax[2].grid(False)
-
+ax.set_title(f'DBSCAN, eps={RIGHT_dec_format(EPS)}', fontfamily='Times New Roman', fontsize=14)
 ```
 
 
+
+
+    Text(0.5, 1.0, 'DBSCAN, eps=0,35')
+
+
+
+
     
-![png](images/output_41_0.png)
+![png](images/output_45_1.png)
     
 
 
@@ -897,10 +991,9 @@ hues['dbscan'] = dbscan.fit_predict(dataset_pca)
 
 
 ```python
-f, ax = plt.subplots(3, 1)
-f.set_figheight(20)
+f, ax = plt.subplots(1, 1)
+f.set_figheight(7)
 f.set_figwidth(10)
-
 
 sb.scatterplot(
     data=dataset,
@@ -908,15 +1001,28 @@ sb.scatterplot(
     y='health',
     hue=hues['kmeans'],
     palette='viridis',
-    ax=ax[0]
+    ax=ax
 )
 
-# ax[0].scatter(
-#     [x for x, _ in kmeans.cluster_centers_],
-#     [y for _, y in kmeans.cluster_centers_],
-#     marker='X',
-#     color='red'
-# )
+ax.set_title(f'KMeans, k={NCLUSTERS}', fontfamily='Times New Roman', fontsize=14)
+
+ax.set_xscale('log')
+ax.set_yscale('linear')
+
+plt.show()
+```
+
+
+    
+![png](images/output_48_0.png)
+    
+
+
+
+```python
+f, ax = plt.subplots(1, 1)
+f.set_figheight(7)
+f.set_figwidth(10)
 
 kmeans_lm = sb.scatterplot(
     data=dataset,
@@ -924,8 +1030,28 @@ kmeans_lm = sb.scatterplot(
     y='health',
     hue=hues['ward'],
     palette='viridis',
-    ax=ax[1]
+    ax=ax
 )
+
+ax.set_title(f'Hierarchical Agglomerative - Ward, k={NCLUSTERS}', fontfamily='Times New Roman', fontsize=14)
+
+ax.set_xscale('log')
+ax.set_yscale('linear')
+
+plt.show()
+```
+
+
+    
+![png](images/output_49_0.png)
+    
+
+
+
+```python
+f, ax = plt.subplots(1, 1)
+f.set_figheight(7)
+f.set_figwidth(10)
 
 
 sb.scatterplot(
@@ -934,31 +1060,19 @@ sb.scatterplot(
     y='health',
     hue=hues['dbscan'],
     palette='viridis',
-    ax=ax[2]
+    ax=ax
 )
 
-ax[0].set_title(f'KMeans, k={NCLUSTERS}', fontfamily='Times New Roman', fontsize=14)
-ax[1].set_title(f'Hierarchical Agglomerative - Ward, k={NCLUSTERS}', fontfamily='Times New Roman', fontsize=14)
-ax[2].set_title(f'DBSCAN, eps={RIGHT_dec_format(EPS)}', fontfamily='Times New Roman', fontsize=14)
+ax.set_title(f'DBSCAN, eps={RIGHT_dec_format(EPS)}', fontfamily='Times New Roman', fontsize=14)
 
-ax[0].grid(False)
-ax[1].grid(False)
-ax[2].grid(False)
-
-ax[0].set_xscale('log')
-ax[0].set_yscale('linear')
-
-ax[1].set_xscale('log')
-ax[1].set_yscale('linear')
-
-ax[2].set_xscale('log')
-ax[2].set_yscale('linear')
+ax.set_xscale('log')
+ax.set_yscale('linear')
 
 plt.show()
 ```
 
 
     
-![png](images/output_44_0.png)
+![png](images/output_50_0.png)
     
 
