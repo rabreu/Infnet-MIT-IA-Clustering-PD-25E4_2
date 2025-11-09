@@ -29,6 +29,7 @@ Para as questões a seguir, você deverá executar códigos em um notebook Jupyt
 Para as questões a seguir, usaremos uma base de dados e faremos a análise exploratória dos dados, antes da clusterização.
 
 1. Baixe os dados disponibilizados na plataforma Kaggle sobre dados sócio-econômicos e de saúde que determinam o índice de desenvolvimento de um país. Esses dados estão disponibilizados através do link: https://www.kaggle.com/datasets/rohan0301/unsupervised-learning-on-country-data
+> [Importação e Normalização dos Dados](#importação-e-normalização-dos-dados)
 2. Quantos países existem no dataset?
 > [Definição da quantidade de países como variável global](#Definição-da-quantidade-de-países-como-variável-global)
 3. Mostre através de gráficos a faixa dinâmica das variáveis que serão usadas nas tarefas de clusterização. Analise os resultados mostrados. O que deve ser feito com os dados antes da etapa de clusterização?
@@ -50,6 +51,7 @@ Para os dados pré-processados da etapa anterior você irá:
       - Qual a distribuição das dimensões em cada grupo
         > Podemos separar três grupos por diferenças socioeconomicas: Países desenvolvidos, em desenvolvimento e subdesenvolvidos.
       - O país, de acordo com o algoritmo, melhor representa o seu agrupamento. Justifique
+        > [Países que melhores representam seu agrupamento](#importação-e-normalização-dos-dados)
 3. Para os resultados da Clusterização Hierárquica, apresente o dendograma e interprete os resultados
 > [Dendrogramas e Análise](#Dendrogramas-e-Análise)
 4. Compare os dois resultados, aponte as semelhanças e diferenças e interprete.
